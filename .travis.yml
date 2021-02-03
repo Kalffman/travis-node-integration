@@ -1,1 +1,21 @@
 language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+install:
+  - echo "nada para ser instalado"
+
+before_script:
+  - echo "nada para ser testado"
+
+script:
+  - docker --version
+  - docker build -t simple-node .
+  - docker tag simple-node kalffman/simple-node:latest
+
+after_success:
+  - echo "$DH_PASSWORD" | docker login -u "$DH_USERNAME" --password-stdin
+  - docker push kalffman/simple-node
